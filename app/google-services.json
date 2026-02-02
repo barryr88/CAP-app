@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "391755660486",
+    "firebase_url": "https://cap-app-69420-default-rtdb.firebaseio.com",
+    "project_id": "cap-app-69420",
+    "storage_bucket": "cap-app-69420.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391755660486:android:75270edadd941eae072bc7",
+        "android_client_info": {
+          "package_name": "com.example.jobtracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "391755660486-qgba17dkg0d8khratct8t43r9rsatmip.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jobtracker",
+            "certificate_hash": "3f25a1deee73095ce64ab066484d26db38a41de0"
+          }
+        },
+        {
+          "client_id": "391755660486-sgarg7eloridtbj5e12pq0hekagnelaq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdrJ_9eg82ap9csINi8RcN1HtTRXFmqmw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "391755660486-sgarg7eloridtbj5e12pq0hekagnelaq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
