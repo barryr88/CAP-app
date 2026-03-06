@@ -1,4 +1,4 @@
-package com.example.jobtracker.data
+package com.capapp.jobtracker.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -1,4 +1,4 @@
-package com.example.jobtracker
+package com.capapp.jobtracker
 
 import org.junit.Test
 

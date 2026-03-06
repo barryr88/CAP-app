@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.example.jobtracker" />
-                  <option name="mobileSdkAppId" value="1:391755660486:android:75270edadd941eae072bc7" />
-                  <option name="projectId" value="cap-app-69420" />
-                  <option name="projectNumber" value="391755660486" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

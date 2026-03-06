@@ -1,8 +1,6 @@
-package com.example.jobtracker.ui.theme
+package com.capapp.jobtracker.ui.theme
 
-import android.app.Activity
 import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -15,8 +13,8 @@ import androidx.compose.ui.platform.LocalContext
 private val DarkColorScheme = darkColorScheme(
     primary = MilwaukeeRed,
     onPrimary = Color.White,
-    secondary = PurpleGrey80,
-    tertiary = Pink80,
+    secondary =Color.White,
+    tertiary = Color.White,
     background = Color.White,
     surface = Color.White,
     onBackground = Color.Black,
@@ -26,19 +24,19 @@ private val DarkColorScheme = darkColorScheme(
 private val LightColorScheme = lightColorScheme(
     primary = MilwaukeeRed,
     onPrimary = Color.White,
-    secondary = PurpleGrey40,
-    tertiary = Pink40,
+    secondary = Color.White,
+    tertiary = Color.White,
     background = Color.White,
     surface = Color.White,
-    onBackground = Color.Black,
-    onSurface = Color.Black
+    onBackground = Color.White,
+    onSurface = Color.White
 )
 
 @Composable
 fun JobTrackerTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = false,
+    darkTheme: Boolean = false,
+    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

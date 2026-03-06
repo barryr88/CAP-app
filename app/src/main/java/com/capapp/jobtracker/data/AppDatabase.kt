@@ -1,4 +1,4 @@
-package com.example.jobtracker.data
+package com.capapp.jobtracker.data
 
 import android.content.Context
 import androidx.room.Database

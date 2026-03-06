@@ -1,3 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">CAP App</string>
+    <string name="default_web_client_id" translatable="false">525662831370-1e9s5rvnppru7jjfkksgt0dutda7s9p6.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">525662831370</string>
+    <string name="google_api_key" translatable="false">AIzaSyDJUcguHDiCiDtXSMci3zM05J1jlt1xNjc</string>
+    <string name="google_app_id" translatable="false">1:525662831370:android:ceb3d485885c19c703f0f3</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDJUcguHDiCiDtXSMci3zM05J1jlt1xNjc</string>
+    <string name="google_storage_bucket" translatable="false">studio-5370490774-c0517.firebasestorage.app</string>
+    <string name="project_id" translatable="false">studio-5370490774-c0517</string>
+    <string name="app_name">CAP_App</string>
+
+    <!-- General & Common Strings -->
+    <string name="back">Back</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="error_colon">Error: %1$s</string>
+    <string name="confirm_deletion">Confirm Deletion</string>
+
+    <!-- Main Menu -->
+    <string name="main_menu">Main Menu</string>
+    <string name="time_clock">Time Clock</string>
+    <string name="team_time_clock">Team Time Clock</string>
+    <string name="customers">Customers</string>
+    <string name="logout">Logout</string>
+
+    <!-- Time Clock & Team Time Clock Screens -->
+    <string name="pay_period">Pay Period</string>
+    <string name="select_pay_period">Select Pay Period</string>
+    <string name="clock_in">Clock In</string>
+    <string name="clock_out">Clock Out</string>
+    <string name="status_clocked_in">Status: Clocked In</string>
+    <string name="status_clocked_out">Status: Clocked Out</string>
+    <string name="total_hours_for_period">Total Hours for Period: %1$s</string>
+    <string name="total_hours">Total Hours: %1$s</string>
+    <string name="time_entry_in">In: %1$s</string>
+    <string name="time_entry_out">Out: %1$s</string>
+    <string name="no_entries_found_period">No entries found for this period.</string>
+    <string name="confirm_delete_time_entry">Are you sure you want to delete this time entry?
+    </string>
+    <string name="toast_clock_in_failed">Clock in failed: %1$s</string>
+    <string name="toast_clock_out_failed">Clock out failed: %1$s</string>
+    <string name="toast_entry_updated">Entry updated</string>
+    <string name="toast_error_updating">Error updating: %1$s</string>
+    <string name="toast_entry_deleted">Entry deleted</string>
+    <string name="toast_error_deleting">Error deleting: %1$s</string>
+
+    <!-- Time Entry Edit Dialog -->
+    <string name="edit_time_entry">Edit Time Entry</string>
+    <string name="clock_in_time">Clock In Time</string>
+    <string name="clock_out_time">Clock Out Time</string>
+    <string name="toast_invalid_datetime_format">Invalid date/time format. Please use yyyy-MM-dd
+        hh:mm:ss a
+    </string>
+
+    <!-- Customers Screen -->
+    <string name="import_customers">Import</string>
+    <string name="add_customer">Add Customer</string>
+    <string name="search_customers">Search Customers</string>
+    <string name="no_customers_found">No customers found.</string>
+    <string name="no_customers_match_search">No customers match your search.</string>
+    <string name="more_options">More options</string>
+    <string name="confirm_delete_customer">Are you sure you want to delete %1$s?</string>
+
+    <!-- Customer Dialogs (Add & Edit) -->
+    <string name="add_new_customer">Add New Customer</string>
+    <string name="edit_customer">Edit Customer</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="email_address">Email Address</string>
+    <string name="billing_address">Billing Address</string>
+    <string name="toast_customer_name_empty">Customer name cannot be empty.</string>
+    <string name="toast_company_not_identified">Error: Company not identified.</string>
+    <string name="toast_customer_saved">Customer saved!</string>
+    <string name="toast_customer_updated">Customer updated!</string>
+    <string name="toast_error_saving_customer">Error saving customer</string>
+    <string name="toast_error_updating_customer">Error updating customer</string>
+    <string name="toast_customer_deleted">Customer deleted</string>
+
+    <!-- Customer Import Process -->
+    <string name="importing_customers">Importing customers…</string>
+    <string name="import_successful">Import Successful</string>
+    <string name="import_failed">Import Failed</string>
+    <string name="import_count_message">%1$d customers were imported.</string>
+
+    <string name="import_customers_from_csv">Import Customers from .csv</string>
+    <string name="products_and_services">Products &amp; Services</string>
+    <string name="add_item">Add Item</string>
+    <string name="no_items_found">No products or services found.</string>
+    <string name="confirm_delete_item">Are you sure you want to delete %1$s?</string>
+
+    <!-- Add/Edit Item Dialog -->
+    <string name="add_new_item">Add New Item</string>
+    <string name="edit_item">Edit Item</string>
+    <string name="item_name">Item Name</string>
+    <string name="item_description">Description (Optional)</string>
+    <string name="item_price">Price</string>
+    <string name="item_type">Type</string>
+    <string name="product">Product</string>
+    <string name="service">Service</string>
+    <string name="toast_item_name_empty">Item name cannot be empty.</string>
+    <string name="toast_item_saved">Item saved!</string>
+    <string name="toast_item_updated">Item updated!</string>
+    <string name="toast_item_deleted">Item deleted</string>
+
+    <string name="import_products_from_csv">Import Products and Services (.csv)</string>
+    <string name="importing_products">Importing products/services…</string>
+    <string name="product_import_count_message">%1$d products/services were imported.</string>
+    <!-- New string for the Products & Services search bar -->
+    <string name="search_products_services">Search Products &amp; Services</string>
+    <!-- We can reuse the existing "no_items_match_search" string if you have it, or add it -->
+    <string name="no_items_match_search">No items match your search.</string>
+
+    <!-- Estimates Screen -->
+    <string name="estimates">Estimates</string>
+    <string name="add_estimate">Add Estimate</string>
+    <string name="no_estimates_found">No estimates found. Add one to get started.</string>
+    <string name="estimate_number_label">Estimate #%1$s</string>
+    <string name="status_draft">Draft</string>
+    <string name="status_sent">Sent</string>
+    <string name="status_approved">Approved</string>
+    <string name="status_declined">Declined</string>
+    <string name="customer">Customer</string>
+    <string name="address">Address</string>
+    <string name="general_description">General Description</string>
+    <!-- New Estimate Screen -->
+    <string name="line_items">Line Items</string>
+    <string name="add_line_item">Add Line Item</string>
+    <string name="search_products_and_services">Search Products &amp; Services</string>
+    <string name="remove_item">Remove Item</string>
+    <string name="quantity">Qty</string>
+    <string name="price">Price</string>
+    <string name="total">Total</string>
+    <string name="item_details">Item/Details</string>
+    <string name="new_estimate">New Estimate</string>
+    <string name="estimate_number">Estimate #</string>
+
+    <!-- ... other strings ... -->
+    <string name="confirm_delete_estimate">Are you sure you want to delete Estimate #%1$s?</string>
+    <string name="toast_estimate_deleted">Estimate deleted</string>
+
+    <!-- Invoices Screen -->
+    <string name="invoices">Invoices</string>
+    <string name="add_invoice">Add Invoice</string>
+    <string name="no_invoices_found">No invoices found.</string>
+    <string name="invoice_number_label">Invoice #%1$s</string>
+    <string name="status_due">Due</string>
+    <string name="status_paid">Paid</string>
+    <string name="status_overdue">Overdue</string>
+    <string name="confirm_delete_invoice">Are you sure you want to delete Invoice #%1$s?</string>
+    <string name="toast_invoice_deleted">Invoice deleted</string>
+    <!-- New Invoice Screen -->
+    <string name="new_invoice">New Invoice</string>
+    <string name="invoice_number">Invoice #</string>
+    <string name="due_date">Due Date</string>
+    <string name="convert_to_invoice">Convert to Invoice</string> <string name="converting_to_invoice">Converting to invoice…</string>
+    <string name="invoice_created_successfully">Invoice created successfully!</string>
+    <string name="send_email">Send email</string>
 </resources>

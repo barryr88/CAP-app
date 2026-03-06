@@ -1,4 +1,4 @@
-package com.example.jobtracker.ui.theme
+package com.capapp.jobtracker.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
