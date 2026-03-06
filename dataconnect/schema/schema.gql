@@ -1,0 +1,44 @@
+type User @table {
+  displayName: String!
+  email: String!
+  role: String!
+  photoUrl: String
+  phoneNumber: String
+}
+
+type Project @table {
+  name: String!
+  startDate: Date!
+  endDate: Date!
+  status: String!
+  description: String
+  budget: Float
+  projectManager: User
+}
+
+type Task @table {
+  name: String!
+  dueDate: Date!
+  status: String!
+  description: String
+  priority: String
+  project: Project
+  assignedTo: User
+}
+
+type Resource @table {
+  name: String!
+  type: String!
+  quantity: Int!
+  unit: String
+  costPerUnit: Float
+  project: Project
+}
+
+type TimesheetEntry @table {
+  date: Date!
+  hoursWorked: Float!
+  notes: String
+  user: User
+  task: Task
+}
