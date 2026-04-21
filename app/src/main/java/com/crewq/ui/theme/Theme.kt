@@ -1,4 +1,4 @@
-package com.capapp.jobtracker.ui.theme
+package com.crewq.ui.theme
 
 import android.os.Build
 import androidx.compose.material3.MaterialTheme

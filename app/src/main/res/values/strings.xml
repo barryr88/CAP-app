@@ -7,7 +7,7 @@
     <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDJUcguHDiCiDtXSMci3zM05J1jlt1xNjc</string>
     <string name="google_storage_bucket" translatable="false">studio-5370490774-c0517.firebasestorage.app</string>
     <string name="project_id" translatable="false">studio-5370490774-c0517</string>
-    <string name="app_name">CAP_App</string>
+    <string name="app_name">CrewQ</string>
 
     <!-- General & Common Strings -->
     <string name="back">Back</string>

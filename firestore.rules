@@ -1,25 +1,190 @@
+/**
+ * @file firestore.rules
+ * @description Firestore Security Rules for the multi-tenant application.
+ *
+ * ## Core Philosophy
+ * This ruleset enforces a multi-tenant security model where all data is partitioned
+ * by company. A user's access is scoped to their assigned company. An elevated 'Manager'
+ * role exists to manage users and data within that company.
+ *
+ * ## Data Structure
+ * - `/companies/{companyId}`: Root document for a company.
+ *   - `/users/{userId}`: Subcollection for users within the company.
+ *     - `/time_entries/{timeEntryId}`: Time clock entries for a user.
+ *     - `/location_history/{locationEntryId}`: GPS history for a user.
+ *   - `/customers/{customerId}`: Subcollection for customers within the company.
+ *   - `/tasks/{taskId}`: Subcollection for tasks within the company.
+ *   - `/estimates/{estimateId}`: Subcollection for estimates.
+ *     - `/lineItems/{lineItemId}`: Line items for an estimate.
+ *   - `/invoices/{invoiceId}`: Subcollection for invoices.
+ *     - `/lineItems/{lineItemId}`: Line items for an invoice.
+ *   - `/productsAndServices/{productId}`: Subcollection for products/services.
+ *   - `/metadata/{counterId}`: Subcollection for auto-incrementing counters.
+ * - `/user_profiles/{userId}`: Top-level collection mapping user UIDs to company names for login.
+ *
+ * ## Key Security Decisions
+ * - **Company-Scoped Access**: All user-related data is nested under a company. Rules
+ *   ensure a user can only access data within their own company.
+ * - **UID to Company Mapping**: A top-level `user_profiles` collection allows the app to
+ *   securely determine a user's company upon login without requiring the user to enter it.
+ * - **Strict Ownership**: A user can always manage their own data (their user doc,
+ *   time entries, etc.).
+ * - **Manager Role**: A user with the 'Manager' role can read/write most data
+ *   within their own company, including other users' data.
+ * - **Immutable History**: Location history is write-once to ensure data integrity.
+ */
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Fix for Error fetching user data: Allow collection group queries on 'users'
+    // Helper Functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isEmployee(companyId) {
+      // An employee is a user whose UID exists as a document in the company's 'users' subcollection.
+      return exists(/databases/$(database)/documents/companies/$(companyId)/users/$(request.auth.uid));
+    }
+
+    function isManager(companyId) {
+      // A manager must be an employee of the company AND have the 'Manager' role in their user document.
+      return isEmployee(companyId) &&
+             get(/databases/$(database)/documents/companies/$(companyId)/users/$(request.auth.uid)).data.role == 'Manager';
+    }
+
+    function isCreatingOwnUser(userId, companyId) {
+      // On user creation, verify the data belongs to the user and the correct company.
+      let userDoc = request.resource.data;
+      return isOwner(userId) &&
+             userDoc.uid == userId &&
+             userDoc.companyName.toLowerCase() == companyId.toLowerCase();
+    }
+
+    // A user can read their own profile to find their company, and create it on signup.
+    match /user_profiles/{userId} {
+      allow get, create: if isOwner(userId);
+      allow update, delete: if false; // Prevent company hopping.
+    }
+
+    // Allow collection group queries on 'time_entries' for managers fetching team data
+    match /{path=**}/time_entries/{timeEntryId} {
+      allow read: if isManager(resource.data.companyName);
+    }
+
+    // Allow collection group queries on 'users' for users finding their own profile across companies
     match /{path=**}/users/{userId} {
-      allow read: if request.auth != null && (resource.data.uid == request.auth.uid || request.auth.uid == userId);
+      allow read: if isSignedIn() && (request.auth.uid == userId || resource.data.uid == request.auth.uid);
     }
 
-    // A user can access documents in a company if their own user document exists in that company.
-    match /companies/{company}/{document=**} {
-      allow read, write: if request.auth != null && exists(/databases/$(database)/documents/companies/$(company)/users/$(request.auth.uid));
-    }
+    match /companies/{companyId} {
+      // Any employee of the company can read the main company document. No one should be able to list all companies.
+      allow get: if isEmployee(companyId);
+      allow list: if false;
 
-    // Rules for the nested time_entries subcollection
-    match /companies/{company}/users/{userId}/time_entries/{timeEntryId} {
-        // Allow a user to read, create, update, and delete their own time entries.
-        allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow create: if isSignedIn() && !exists(/databases/$(database)/documents/companies/$(companyId));
+      allow update, delete: if isManager(companyId); // Only a manager of that company can edit/delete it
 
-        // Additionally, allow Managers of the same company to read time entries.
-        allow get, list: if request.auth != null &&
-                    get(/databases/$(database)/documents/companies/$(company)/users/$(request.auth.uid)).data.role == 'Manager';
+      match /users/{userId} {
+        // A user can read, and update their own document.
+        allow get, update: if isOwner(userId);
+
+        // A user can create their own document during signup.
+        allow create: if isCreatingOwnUser(userId, companyId);
+
+        // A manager can list and read any user in their company.
+        allow list, get: if isManager(companyId);
+        // A manager can also update a user's role in their company.
+        allow update: if isManager(companyId);
+
+        // A user can only delete their own account.
+        allow delete: if isOwner(userId);
+
+        match /time_entries/{timeEntryId} {
+          // A user can manage their own time entries.
+          allow read, write: if isOwner(userId);
+
+          // A manager can manage any time entry for users within their company.
+          allow read, write: if isManager(companyId);
+        }
+
+        match /location_history/{locationEntryId} {
+          // A user can create their own location history.
+          allow create: if isOwner(userId);
+
+          // A user can read their own location history. A manager can read any history in their company.
+          allow get, list: if isOwner(userId) || isManager(companyId);
+
+          // History should be immutable.
+          allow update, delete: if false;
+        }
+      }
+
+      match /customers/{customerId} {
+        // Any employee of the company can read customer data.
+        allow get, list: if isEmployee(companyId);
+
+        // Only managers of that company can create, update, or delete customers.
+        allow create, update, delete: if isManager(companyId);
+      }
+
+      match /tasks/{taskId} {
+        // Any employee of the company can read task data.
+        allow get, list: if isEmployee(companyId);
+
+        // Only managers of that company can create or delete tasks.
+        allow create, delete: if isManager(companyId);
+
+        // A manager or an assigned employee can update the task.
+        allow update: if isManager(companyId) ||
+                      (isEmployee(companyId) && request.auth.uid in request.resource.data.assignedUserIds);
+      }
+
+      match /estimates/{estimateId} {
+        // Any employee of the company can read estimate data.
+        allow get, list: if isEmployee(companyId);
+
+        // Only managers of that company can create, update, or delete estimates.
+        allow create, update, delete: if isManager(companyId);
+
+        match /lineItems/{lineItemId} {
+            allow get, list: if isEmployee(companyId);
+            allow create, update, delete: if isManager(companyId);
+        }
+      }
+
+      match /invoices/{invoiceId} {
+        // Any employee of the company can read invoice data.
+        allow get, list: if isEmployee(companyId);
+
+        // Only managers of that company can create, update, or delete invoices.
+        allow create, update, delete: if isManager(companyId);
+
+        match /lineItems/{lineItemId} {
+            allow get, list: if isEmployee(companyId);
+            allow create, update, delete: if isManager(companyId);
+        }
+      }
+
+      match /productsAndServices/{productId} {
+        // Any employee of the company can read products and services.
+        allow get, list: if isEmployee(companyId);
+
+        // Only managers of that company can create, update, or delete them.
+        allow create, update, delete: if isManager(companyId);
+      }
+
+      match /metadata/{counterId} {
+        // Only managers can read, create or update counters.
+        allow get, create, update: if isManager(companyId) && counterId in ['jobCounter', 'estimateCounter', 'invoiceCounter'];
+
+        // Counters should never be deleted.
+        allow delete: if false;
+      }
     }
   }
 }

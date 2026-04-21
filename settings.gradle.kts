@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "CAP App"
+rootProject.name = "CrewQ"
 include(":app")

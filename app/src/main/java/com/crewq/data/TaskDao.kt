@@ -1,4 +1,4 @@
-package com.capapp.jobtracker.data
+package com.crewq.data
 
 import androidx.room.Dao
 import androidx.room.Insert

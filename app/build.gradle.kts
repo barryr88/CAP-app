@@ -10,11 +10,11 @@ plugins {
 }
 
 android {
-    namespace = "com.capapp.jobtracker"
+    namespace = "com.crewq"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.capapp.jobtracker"
+        applicationId = "com.crewq"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
@@ -33,6 +33,7 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
@@ -60,6 +61,7 @@ dependencies {
     // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.firebase.messaging.ktx)
     ksp(libs.androidx.room.compiler)
 
     // Credentials
@@ -87,7 +89,7 @@ dependencies {
     implementation(libs.firebase.ui.auth)
     implementation(libs.opencsv)
     implementation(libs.androidx.compose.material.icons.extended)
-    implementation("com.kizitonwose.calendar:compose:2.5.2")
+    implementation("com.kizitonwose.calendar:compose:2.6.0")
     constraints {
         implementation("androidx.activity:activity-compose:1.9.0") {
             because("The enableEdgeToEdge() API requires version 1.8.0 or higher")
@@ -101,5 +103,11 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1")
-    implementation("com.google.firebase:firebase-storage-ktx")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+    implementation("androidx.browser:browser:1.8.0")
+    implementation("com.google.firebase:firebase-functions")
+    implementation("com.google.firebase:firebase-messaging")
+    implementation("com.stripe:stripe-android:23.2.0")
+    implementation("androidx.biometric:biometric:1.1.0")
+    implementation("io.github.g0dkar:qrcode-kotlin:4.5.0")
 }
